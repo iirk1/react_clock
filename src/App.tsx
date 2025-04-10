@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.scss';
-import { render } from 'react-dom';
 
 function getRandomName(): string {
   const value = Date.now().toString().slice(-4);
@@ -31,23 +30,19 @@ export class App extends React.Component<Props, State> {
     this.timerId = window.setInterval(() => {
       const newName = getRandomName();
 
-      if (this.state.hasClock === true) {
-        // eslint-disable-next-line no-console
-        console.warn(`Renamed from ${this.state.clockName} to ${newName}`);
-      }
-
       this.setState({ clockName: newName });
     }, 3300);
 
     this.dateId = window.setInterval(() => {
       const newDate = new Date();
+      const newTime = newDate.toUTCString().slice(-12, -4);
 
-      this.setState({ today: newDate });
-
-      if (this.state.hasClock === true) {
-        // eslint-disable-next-line no-console
-        console.log(this.state.today.toUTCString().slice(-12, -4));
-      }
+      this.setState({ today: newDate }, () => {
+        if (this.state.hasClock === true) {
+          // eslint-disable-next-line no-console
+          console.log(newTime);
+        }
+      });
     }, 1000);
 
     this.setState({ hasClock: true });
