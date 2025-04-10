@@ -31,8 +31,10 @@ export class App extends React.Component<Props, State> {
     this.timerId = window.setInterval(() => {
       const newName = getRandomName();
 
-      // eslint-disable-next-line no-console
-      console.warn(`Renamed from ${this.state.clockName} to ${newName}`);
+      if (this.state.hasClock === true) {
+        // eslint-disable-next-line no-console
+        console.warn(`Renamed from ${this.state.clockName} to ${newName}`);
+      }
 
       this.setState({ clockName: newName });
     }, 3300);
@@ -42,8 +44,10 @@ export class App extends React.Component<Props, State> {
 
       this.setState({ today: newDate });
 
-      // eslint-disable-next-line no-console
-      console.log(this.state.today.toUTCString().slice(-12, -4));
+      if (this.state.hasClock === true) {
+        // eslint-disable-next-line no-console
+        console.log(this.state.today.toUTCString().slice(-12, -4));
+      }
     }, 1000);
 
     this.setState({ hasClock: true });
